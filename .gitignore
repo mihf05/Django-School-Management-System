@@ -123,3 +123,13 @@ dmypy.json
 
 # Logs
 *.log.*
+
+# Node.js and Next.js
+node_modules/
+.next/
+*.log
+*.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
