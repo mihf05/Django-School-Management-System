@@ -25,27 +25,17 @@ def doLogin(request, **kwargs):
     if request.method != "POST":
         return HttpResponse("<h4>Denied</h4>")
     else:
-        captcha_token = request.POST.get("g-recaptcha-response")
-        captcha_url = "https://www.google.com/recaptcha/api/siteverify"
-        captcha_key = "6LfswtgZAAAAABX9gbLqe-d97qE2g1JP8oUYritJ"
-        data = {"secret": captcha_key, "response": captcha_token}
-        try:
-            captcha_server = requests.post(url=captcha_url, data=data)
-            response = json.loads(captcha_server.text)
-            if response["success"] == False:
-                messages.error(request, "Invalid Captcha. Try Again")
-                return redirect("/")
-        except:
-            messages.error(request, "Captcha could not be verified. Try Again")
-            return redirect("/")
-
-        user = EmailBackend.authenticate(
+        print(f"Before login: Request path={request.path}, Session key={request.session.session_key}")  # Debug print
+        user = authenticate(
             request,
             username=request.POST.get("email"),
             password=request.POST.get("password"),
         )
-        if user != None:
+        print(f"Authentication attempt: User={user}, User type={user.user_type if user else 'None'}")  # Debug print
+        if user is not None:
             login(request, user)
+            print(f"Login successful: User={user}, User type={user.user_type}")  # Debug print
+            print(f"After login: Request path={request.path}, Session key={request.session.session_key}")  # Debug print
             if user.user_type == "1":
                 return redirect(reverse("admin_home"))
             elif user.user_type == "2":
@@ -54,6 +44,7 @@ def doLogin(request, **kwargs):
                 return redirect(reverse("student_home"))
         else:
             messages.error(request, "Invalid details")
+            print("Login failed: Invalid details")  # Debug print
             return redirect("/")
 
 

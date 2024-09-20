@@ -4,61 +4,65 @@
 
 {% block content %}
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-dark">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
-                    </div>
-
-                    <div class="table card-body">
-                        <table class="table table-bordered table-hover">
-                            <tr>
-                                <th>#</th>
-                                <th>Student</th>
-                                <th>Session</th>
-                                <th>Message</th>
-                                <th>Sent On</th>
-                                <th>Replied On</th>
-                                <th>Action</th>
-
-                            </tr>
-                            {% for feedback in  feedbacks %}
-                              <tr>
-                                  <td>{{forloop.counter}}</td>
-                                  <td>{{feedback.student}}</td>
-                                  <td>{{feedback.student.session}}</td>
-                                  <td>{{feedback.feedback}}</td>
-                                 
-                                      
-                                      {% if feedback.reply == "" %}
-                                      <td>{{feedback.created_at}}</td>
-                                      <td><span  class='badge badge-warning'>Pending Response</span></td>
-                                           <td> <button data-toggle = "modal" data-target = "#reply_modal" value="{{feedback.id}}" class="btn btn-success reply_open_modal">Reply</button>
-                                          {% else %}
-                                          <td>{{feedback.created_at}}</td>
-                                          <td>{{feedback.updated_at}}</td>
-                                            <td>{{feedback.reply}}</td>
-                                      {% endif %}
-                                          
-                                  </td>
-                       
-                              </tr>
+<NextUI.Container fluid>
+    <NextUI.Row>
+        <NextUI.Col span={12}>
+            <NextUI.Card css={{ backgroundColor: '$yaleBlue', color: '$nonPhotoBlue' }}>
+                <NextUI.Card.Header>
+                    <NextUI.Text h3>{{page_title}}</NextUI.Text>
+                </NextUI.Card.Header>
+                <NextUI.Card.Body>
+                    <NextUI.Table
+                        aria-label="Student Feedback Table"
+                        css={{
+                            height: "auto",
+                            minWidth: "100%",
+                        }}
+                    >
+                        <NextUI.Table.Header>
+                            <NextUI.Table.Column>#</NextUI.Table.Column>
+                            <NextUI.Table.Column>Student</NextUI.Table.Column>
+                            <NextUI.Table.Column>Session</NextUI.Table.Column>
+                            <NextUI.Table.Column>Message</NextUI.Table.Column>
+                            <NextUI.Table.Column>Sent On</NextUI.Table.Column>
+                            <NextUI.Table.Column>Replied On</NextUI.Table.Column>
+                            <NextUI.Table.Column>Action</NextUI.Table.Column>
+                        </NextUI.Table.Header>
+                        <NextUI.Table.Body>
+                            {% for feedback in feedbacks %}
+                                <NextUI.Table.Row key="{{forloop.counter}}">
+                                    <NextUI.Table.Cell>{{forloop.counter}}</NextUI.Table.Cell>
+                                    <NextUI.Table.Cell>{{feedback.student}}</NextUI.Table.Cell>
+                                    <NextUI.Table.Cell>{{feedback.student.session}}</NextUI.Table.Cell>
+                                    <NextUI.Table.Cell>{{feedback.feedback}}</NextUI.Table.Cell>
+                                    <NextUI.Table.Cell>{{feedback.created_at}}</NextUI.Table.Cell>
+                                    <NextUI.Table.Cell>
+                                        {% if feedback.reply == "" %}
+                                            <NextUI.Badge color="warning">Pending Response</NextUI.Badge>
+                                        {% else %}
+                                            {{feedback.updated_at}}
+                                        {% endif %}
+                                    </NextUI.Table.Cell>
+                                    <NextUI.Table.Cell>
+                                        {% if feedback.reply == "" %}
+                                            <NextUI.Button color="success" auto onClick={() => openReplyModal({{feedback.id}})}>
+                                                Reply
+                                            </NextUI.Button>
+                                        {% else %}
+                                            {{feedback.reply}}
+                                        {% endif %}
+                                    </NextUI.Table.Cell>
+                                </NextUI.Table.Row>
                             {% endfor %}
-                        </table>
-                    </div>
-                    </div>
-                <!-- /.card -->
+                        </NextUI.Table.Body>
+                    </NextUI.Table>
+                </NextUI.Card.Body>
+            </NextUI.Card>
+        </NextUI.Col>
+    </NextUI.Row>
+</NextUI.Container>
 
-            </div>
-        </div>
-    </div>
-</section>
-<div class = "modal fade" id = "reply_modal" tabindex = "-1" role = "dialog" 
-   aria-labelledby = "myModalLabel" aria-hidden = "true">
+<NextUI.Modal closeButton aria-labelledby="modal-title" open={isOpen} onClose={closeHandler}>
    
    <div class = "modal-dialog">
       <div class = "modal-content">

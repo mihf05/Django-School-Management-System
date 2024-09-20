@@ -120,6 +120,7 @@ AUTH_USER_MODEL = "main_app.CustomUser"
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
+    "main_app.EmailBackend",
 ]
 TIME_ZONE = "Africa/Lagos"
 
