@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/table';
-import { Modal, Button, Input, Select, SelectItem } from '@nextui-org/react';
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Modal, Button, Input, Select, SelectItem } from '@nextui-org/react';
 import { FaReply, FaTimes, FaCheck } from 'react-icons/fa';
 
 const StudentLeaveView = ({ leaves }) => {
