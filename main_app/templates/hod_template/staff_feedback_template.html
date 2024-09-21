@@ -4,59 +4,55 @@
 
 {% block content %}
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-dark">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
-                    </div>
-
-                    <div class="table card-body">
-                        <table class="table table-bordered table-hover">
-                            <tr>
-                                <th>#</th>
-                                <th>Staff</th>
-                                <th>Course</th>
-                                <th>Message</th>
-                                <th>Sent On</th>
-                                <th>Replied On</th>
-                                <th>Action</th>
-                            </tr>
-                            {% for feedback in  feedbacks %}
-                              <tr>
-                                  <td>{{forloop.counter}}</td>
-                                  <td>{{feedback.staff}}</td>
-                                  <td>{{feedback.staff.course}}</td>
-                                  <td>{{feedback.feedback}}</td>
-                                      
-                                            
-                                    {% if feedback.reply == "" %}
-                                    <td>{{feedback.created_at}}</td>
-                                    <td><span  class='badge badge-warning'>Pending Response</span></td>
-                                         <td> <button data-toggle = "modal" data-target = "#reply_modal" value="{{feedback.id}}" class="btn btn-success reply_open_modal">Reply</button>
-                                        {% else %}
-                                        <td>{{feedback.created_at}}</td>
-                                        <td>{{feedback.updated_at}}</td>
-                                          <td>{{feedback.reply}}</td>
-                                    {% endif %}
-                                  </td>
-                       
-                              </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    </div>
-                <!-- /.card -->
-
+<section class="container mx-auto p-4">
+    <div class="bg-[#01377d] text-white rounded-lg shadow-lg">
+        <div class="pb-0 pt-2 px-4 flex flex-col items-start border-b border-white/10">
+            <h1 class="font-bold text-4xl font-roboto">{{page_title}}</h1>
+        </div>
+        <div class="overflow-visible py-2">
+            <div class="bg-white text-black p-4 rounded-md m-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Staff</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sent On</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Replied On</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for feedback in feedbacks %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{forloop.counter}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{feedback.staff}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{feedback.staff.course}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{feedback.feedback}}</td>
+                            {% if feedback.reply == "" %}
+                            <td class="px-6 py-4 whitespace-nowrap">{{feedback.created_at}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending Response</span></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button data-toggle="modal" data-target="#reply_modal" value="{{feedback.id}}" class="bg-[#009dd1] hover:bg-[#26b170] text-white font-bold py-2 px-4 rounded reply_open_modal">
+                                    Reply
+                                </button>
+                            </td>
+                            {% else %}
+                            <td class="px-6 py-4 whitespace-nowrap">{{feedback.created_at}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{feedback.updated_at}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{feedback.reply}}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </section>
-<div class = "modal fade" id = "reply_modal" tabindex = "-1" role = "dialog" 
-   aria-labelledby = "myModalLabel" aria-hidden = "true">
+<div class="modal fade" id="reply_modal" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
    
    <div class = "modal-dialog">
       <div class = "modal-content">

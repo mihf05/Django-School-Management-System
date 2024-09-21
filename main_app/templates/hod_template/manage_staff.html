@@ -4,55 +4,48 @@
 
 {% block content %}
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Gender</th>
-                                    <th>Course</th>
-                                    <th>Avatar</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for staff in allStaff %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>{{staff.last_name}}, {{staff.first_name}}</td>
-                                    <td>{{staff.email}}</td>
-                                    <td>{{staff.gender}}</td>
-                                    <td>{{staff.staff.course.name}}</td>
-                                    <td>
-                                        {% if staff.profile_pic == ""  %}
-                                        No Image
-                                        {% else %}
-                                        <img class="img img-fluid mb-2" height="56" width="56"
-                                            src="{{staff.profile_pic}}" alt="">
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'edit_staff' staff.staff.id %}" class="btn btn-info">Edit</a> - 
-                                        <a href="{% url 'delete_staff' staff.staff.id %}" class="btn btn-danger" onclick="return confirm('Are you sure about this ?')">Delete</a>
-                                    
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+<section class="container mx-auto p-4">
+    <div class="bg-[#01377d] text-white rounded-lg shadow-lg">
+        <div class="pb-0 pt-2 px-4 flex flex-col items-start border-b border-white/10">
+            <h1 class="font-bold text-4xl font-roboto">{{page_title}}</h1>
+        </div>
+        <div class="overflow-visible py-2">
+            <div class="bg-white text-black p-4 rounded-md m-4">
+                <table class="w-full">
+                    <thead class="bg-[#009dd1] text-white">
+                        <tr>
+                            <th class="p-2">#</th>
+                            <th class="p-2">Full Name</th>
+                            <th class="p-2">Email</th>
+                            <th class="p-2">Gender</th>
+                            <th class="p-2">Course</th>
+                            <th class="p-2">Avatar</th>
+                            <th class="p-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for staff in allStaff %}
+                        <tr class="border-b">
+                            <td class="p-2">{{ forloop.counter }}</td>
+                            <td class="p-2">{{staff.last_name}}, {{staff.first_name}}</td>
+                            <td class="p-2">{{staff.email}}</td>
+                            <td class="p-2">{{staff.gender}}</td>
+                            <td class="p-2">{{staff.staff.course.name}}</td>
+                            <td class="p-2">
+                                {% if staff.profile_pic == ""  %}
+                                No Image
+                                {% else %}
+                                <img class="h-14 w-14 object-cover rounded-full" src="{{staff.profile_pic}}" alt="Staff avatar">
+                                {% endif %}
+                            </td>
+                            <td class="p-2">
+                                <a href="{% url 'edit_staff' staff.staff.id %}" class="bg-[#009dd1] text-white px-3 py-1 rounded mr-2 hover:bg-[#01377d]">Edit</a>
+                                <a href="{% url 'delete_staff' staff.staff.id %}" class="bg-[#7ed348] text-white px-3 py-1 rounded hover:bg-[#26b170]" onclick="return confirm('Are you sure about this ?')">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

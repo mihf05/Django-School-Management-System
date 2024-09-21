@@ -4,19 +4,14 @@
 
 {% block content %}
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-dark">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
-                    </div>
-                    {% include "main_app/form_template.html" with messages=messages  form=form button_text="Update Student"%}
-                </div>
-                <!-- /.card -->
-
+<section class="container mx-auto p-4">
+    <div class="bg-[#01377d] text-white rounded-lg shadow-lg">
+        <div class="pb-0 pt-2 px-4 flex flex-col items-start border-b border-white/10">
+            <h1 class="font-bold text-4xl font-roboto">{{page_title}}</h1>
+        </div>
+        <div class="overflow-visible py-2">
+            <div class="bg-white text-black p-4 rounded-md m-4">
+                {% include "main_app/form_template.html" with messages=messages form=form button_text="Update Student" %}
             </div>
         </div>
     </div>

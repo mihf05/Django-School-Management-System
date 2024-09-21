@@ -4,63 +4,59 @@
 
 {% block content %}
 
-<NextUI.Container fluid>
-    <NextUI.Row>
-        <NextUI.Col span={12}>
-            <NextUI.Card css={{ backgroundColor: '$yaleBlue', color: '$nonPhotoBlue' }}>
-                <NextUI.Card.Header>
-                    <NextUI.Text h3>{{page_title}}</NextUI.Text>
-                </NextUI.Card.Header>
-                <NextUI.Card.Body>
-                    <NextUI.Table
-                        aria-label="Student Feedback Table"
-                        css={{
-                            height: "auto",
-                            minWidth: "100%",
-                        }}
-                    >
-                        <NextUI.Table.Header>
-                            <NextUI.Table.Column>#</NextUI.Table.Column>
-                            <NextUI.Table.Column>Student</NextUI.Table.Column>
-                            <NextUI.Table.Column>Session</NextUI.Table.Column>
-                            <NextUI.Table.Column>Message</NextUI.Table.Column>
-                            <NextUI.Table.Column>Sent On</NextUI.Table.Column>
-                            <NextUI.Table.Column>Replied On</NextUI.Table.Column>
-                            <NextUI.Table.Column>Action</NextUI.Table.Column>
-                        </NextUI.Table.Header>
-                        <NextUI.Table.Body>
+<div class="container mx-auto px-4">
+    <div class="flex flex-wrap -mx-4">
+        <div class="w-full px-4">
+            <div class="bg-yale-blue text-non-photo-blue rounded-lg shadow-lg p-6">
+                <div class="mb-4">
+                    <h3 class="text-2xl font-bold">{{page_title}}</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white">
+                        <thead class="bg-blue-green text-white">
+                            <tr>
+                                <th class="py-2 px-4 text-left">#</th>
+                                <th class="py-2 px-4 text-left">Student</th>
+                                <th class="py-2 px-4 text-left">Session</th>
+                                <th class="py-2 px-4 text-left">Message</th>
+                                <th class="py-2 px-4 text-left">Sent On</th>
+                                <th class="py-2 px-4 text-left">Replied On</th>
+                                <th class="py-2 px-4 text-left">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {% for feedback in feedbacks %}
-                                <NextUI.Table.Row key="{{forloop.counter}}">
-                                    <NextUI.Table.Cell>{{forloop.counter}}</NextUI.Table.Cell>
-                                    <NextUI.Table.Cell>{{feedback.student}}</NextUI.Table.Cell>
-                                    <NextUI.Table.Cell>{{feedback.student.session}}</NextUI.Table.Cell>
-                                    <NextUI.Table.Cell>{{feedback.feedback}}</NextUI.Table.Cell>
-                                    <NextUI.Table.Cell>{{feedback.created_at}}</NextUI.Table.Cell>
-                                    <NextUI.Table.Cell>
+                                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <td class="py-2 px-4">{{forloop.counter}}</td>
+                                    <td class="py-2 px-4">{{feedback.student}}</td>
+                                    <td class="py-2 px-4">{{feedback.student.session}}</td>
+                                    <td class="py-2 px-4">{{feedback.feedback}}</td>
+                                    <td class="py-2 px-4">{{feedback.created_at}}</td>
+                                    <td class="py-2 px-4">
                                         {% if feedback.reply == "" %}
-                                            <NextUI.Badge color="warning">Pending Response</NextUI.Badge>
+                                            <span class="bg-sgbus-green text-white py-1 px-2 rounded-full text-xs">Pending Response</span>
                                         {% else %}
                                             {{feedback.updated_at}}
                                         {% endif %}
-                                    </NextUI.Table.Cell>
-                                    <NextUI.Table.Cell>
+                                    </td>
+                                    <td class="py-2 px-4">
                                         {% if feedback.reply == "" %}
-                                            <NextUI.Button color="success" auto onClick={() => openReplyModal({{feedback.id}})}>
+                                            <button class="bg-jade text-white py-1 px-3 rounded hover:bg-blue-600" onclick="openReplyModal({{feedback.id}})">
                                                 Reply
-                                            </NextUI.Button>
+                                            </button>
                                         {% else %}
                                             {{feedback.reply}}
                                         {% endif %}
-                                    </NextUI.Table.Cell>
-                                </NextUI.Table.Row>
+                                    </td>
+                                </tr>
                             {% endfor %}
-                        </NextUI.Table.Body>
-                    </NextUI.Table>
-                </NextUI.Card.Body>
-            </NextUI.Card>
-        </NextUI.Col>
-    </NextUI.Row>
-</NextUI.Container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <NextUI.Modal closeButton aria-labelledby="modal-title" open={isOpen} onClose={closeHandler}>
    

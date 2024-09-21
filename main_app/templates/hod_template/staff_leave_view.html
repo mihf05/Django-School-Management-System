@@ -4,63 +4,52 @@
 
 {% block content %}
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-dark">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
-                    </div>
-
-                    <div class="table card-body">
-                        <table class="table table-bordered table-hover">
-                            <tr>
-                                <th>#</th>
-                                <th>Staff</th>
-                                <th>Course</th>
-                                <th>Message</th>
-                                <th>Leave Date</th>
-                                <th>Submitted On</th>
-                                <th>Action</th>
-
-                            </tr>
-                            {% for leave in  allLeave %}
-                              <tr>
-                                  <td>{{forloop.counter}}</td>
-                                  <td>{{leave.staff}}</td>
-                                  <td>{{leave.staff.course}}</td>
-                                  <td>{{leave.message}}</td>
-                                  <td>{{leave.date}}</td>
-                                  <td>{{leave.created_at}}</td>
-                                 
-                                      
-                                      {% if leave.status == 0 %}
-                                           <td> <button data-toggle = "modal" data-target = "#reply_modal" value="{{leave.id}}" class="btn btn-success reply_open_modal">Reply</button>
-{% elif leave.status == -1 %}
-<td><span  class='badge badge-danger'>Rejected</span></td>
-{% else %}
-<td><span  class='badge badge-success'>Approved</span></td>
-
-                                            <td>{{feedback.updated_at}}</td>
-                                      {% endif %}
-                                          
-                                  </td>
-                       
-                              </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    </div>
-                <!-- /.card -->
-
+<section class="container mx-auto p-4">
+    <div class="bg-[#01377d] text-white rounded-lg shadow-lg">
+        <div class="pb-0 pt-2 px-4 flex flex-col items-start border-b border-white/10">
+            <h1 class="font-bold text-4xl font-roboto">{{page_title}}</h1>
+        </div>
+        <div class="overflow-visible py-2">
+            <div class="bg-white text-black p-4 rounded-md m-4">
+                <table class="w-full">
+                    <thead class="bg-[#009dd1] text-white">
+                        <tr>
+                            <th class="p-2">#</th>
+                            <th class="p-2">Staff</th>
+                            <th class="p-2">Course</th>
+                            <th class="p-2">Message</th>
+                            <th class="p-2">Leave Date</th>
+                            <th class="p-2">Submitted On</th>
+                            <th class="p-2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in allLeave %}
+                        <tr class="border-b">
+                            <td class="p-2">{{forloop.counter}}</td>
+                            <td class="p-2">{{leave.staff}}</td>
+                            <td class="p-2">{{leave.staff.course}}</td>
+                            <td class="p-2">{{leave.message}}</td>
+                            <td class="p-2">{{leave.date}}</td>
+                            <td class="p-2">{{leave.created_at}}</td>
+                            <td class="p-2">
+                                {% if leave.status == 0 %}
+                                <button data-toggle="modal" data-target="#reply_modal" value="{{leave.id}}" class="bg-[#009dd1] text-white px-3 py-1 rounded hover:bg-[#01377d] reply_open_modal">Reply</button>
+                                {% elif leave.status == -1 %}
+                                <span class="bg-[#7ed348] text-white px-2 py-1 rounded">Rejected</span>
+                                {% else %}
+                                <span class="bg-[#26b170] text-white px-2 py-1 rounded">Approved</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </section>
-<div class = "modal fade" id = "reply_modal" tabindex = "-1" role = "dialog" 
-   aria-labelledby = "myModalLabel" aria-hidden = "true">
+<div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="reply_modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
    
    <div class = "modal-dialog">
       <div class = "modal-content">

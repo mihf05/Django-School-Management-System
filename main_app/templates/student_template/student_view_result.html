@@ -4,38 +4,35 @@
 
 {% block content %}
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-       
-                <!-- /.card -->
-<div class="card card-dark">
-    <div class="card-header"><h3 class="card-title">{{page_title}}</h3>
-    </div>
-   <div class="table p-2">
-
-       <table class="table table-bordered">
-           <tr>
-               <th>ID</th>
-               <th>Subject</th>
-               <th>Test</th>
-               <th>Exam</th>
-               <th>Total</th>
-        </tr>
-        {% for result in results %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{ result.subject }}</td>
-            <td>{{ result.test }}</td>
-            <td>{{ result.exam }}</td>
-            <td>{{ result.test|add:result.exam }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-    </div>
+<section class="container mx-auto p-4">
+    <div class="bg-[#01377d] text-white rounded-lg shadow-lg">
+        <div class="pb-0 pt-2 px-4 flex flex-col items-start border-b border-white/10">
+            <h1 class="font-bold text-4xl font-roboto">{{page_title}}</h1>
+        </div>
+        <div class="overflow-visible py-2">
+            <div class="bg-white text-black p-4 rounded-md m-4">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Test</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Exam</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for result in results %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{forloop.counter}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ result.subject }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ result.test }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ result.exam }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ result.test|add:result.exam }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

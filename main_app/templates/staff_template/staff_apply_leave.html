@@ -4,56 +4,51 @@
 
 {% block content %}
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-dark">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
-                    </div>
-
-                    {% include "main_app/form_template.html" with messages=messages  form=form button_text="Apply For Leave"%}
-                </div>
-                <!-- /.card -->
-<div class="card card-default">
-    <div class="card-header"><h3 class="card-title"><b>Leave History</b></h3>
-   <div class="table">
-
-       <table class="table table-bordered table-hover">
-           <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Message</th>
-             <th>Status</th>
-         </tr>
-           </thead>
-        {% for leave in leave_history %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{leave.date}}</td>
-              <td>{{leave.message}}</td>
-              <td>
-                  
-                  {% if leave.status == 0 %}
-                  <span class="badge badge-warning">Pending</span>
-                  {% elif leave.status == 1 %}
-                  <span class="badge badge-success">Accepted</span>
-                  
-                    {% else %}
-                    <span class="badge badge-danger">Rejected</span>
-                    
-                    {% endif %}
-                    
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-    </div>
+<section class="container mx-auto p-4">
+    <div class="bg-[#01377d] text-white rounded-lg shadow-lg">
+        <div class="pb-0 pt-2 px-4 flex flex-col items-start border-b border-white/10">
+            <h1 class="font-bold text-4xl font-roboto">{{page_title}}</h1>
+        </div>
+        <div class="overflow-visible py-2">
+            <div class="bg-white text-black p-4 rounded-md m-4">
+                {% include "main_app/form_template.html" with messages=messages form=form button_text="Apply For Leave" %}
             </div>
+        </div>
+    </div>
+
+    <div class="mt-8 bg-white rounded-lg shadow-lg">
+        <div class="p-4 border-b border-gray-200">
+            <h3 class="text-xl font-bold">Leave History</h3>
+        </div>
+        <div class="p-4">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for leave in leave_history %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">{{forloop.counter}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{leave.date}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{leave.message}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if leave.status == 0 %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                            {% elif leave.status == 1 %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Accepted</span>
+                            {% else %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rejected</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
