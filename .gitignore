@@ -127,7 +127,6 @@ dmypy.json
 # Node.js and Next.js
 node_modules/
 .next/
-.next
 *.log
 *.env
 *.env.local
